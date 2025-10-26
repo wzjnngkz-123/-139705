@@ -1,0 +1,535 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喵~次元</title>
+    <style>
+        /* 1. 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        /* 2. 核心修改：先统一设置背景通用属性，再用媒体查询区分双端背景图 */
+        body {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 20px 15px;
+            transition: background 0.3s, background-image 0.3s;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 30px;
+        }
+        /* PC端（屏幕>768px）：使用指定的默认背景图 */
+        @media (min-width: 769px) {
+            body {
+                background-image: url(https://i.ibb.co/GvgFj0GH/20251026194154-83-4.jpg);
+            }
+        }
+        /* 移动端（屏幕≤768px）：恢复原始默认背景图 */
+        @media (max-width: 768px) {
+            body {
+                background-image: url(https://i.ibb.co/jPbSBG6B/20251014191040-42-4.jpg);
+            }
+        }
+        /* 外层容器（透明度固定）：自适应宽度 */
+        .opacity-wrap {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 1;
+            position: relative;
+            z-index: 1;
+        }
+        .content-wrap {
+            position: relative;
+        }
+        .top-bar {
+            margin: 0 0 15px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* 标题样式 */
+        header h1 {
+            text-align: center;
+            color:#ff476f;
+            margin-bottom: 12px;
+            font-size: 24px;
+            opacity: 1;
+        }
+        /* 时间模块样式 */
+        .time-display {
+            color: #ff6b8e;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            opacity: 1;
+            text-align: center;
+        }
+        .date-part {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+        .time-part {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        /* 核心：双端统一双列布局，外层容器横向排列 */
+        .site-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        /* 网站列表：双端统一占比，自适应宽度 */
+        .site-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: calc(50% - 7.5px);
+        }
+        .site-item {
+            width: 100%;
+            background-color: #ffd6dd;
+            border-radius: 6px;
+            padding: 12px 8px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, opacity 0.3s;
+            opacity: 0.5;
+        }
+        .site-item span {
+            display: block;
+            color: #000;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 0;
+            opacity: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .site-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            background-color: #ffb3c1;
+        }
+        /* 底部样式 */
+        footer {
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            margin-top: 15px;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+            width: 100%;
+            opacity: 1;
+        }
+        /* 核心：合并为1个设置按钮+设置面板样式（圆形+设置图标） */
+        .func-btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        /* 合并后的设置按钮：双端统一尺寸 */
+        .setting-btn {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: #ffd6dd;
+            color: #000;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s, opacity 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.5;
+        }
+        /* 设置图标：用Unicode符号，贴合设置功能 */
+        .setting-btn::after {
+            content: "⚙️";
+        }
+        .setting-btn:hover {
+            background: #ffb3c1;
+        }
+        /* 核心：扩展面板，双端适配尺寸 */
+        .setting-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0;
+            padding: 15px 20px;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 999;
+            opacity: 0.5;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            width: 80%;
+            max-width: 300px;
+        }
+        .setting-panel.show {
+            display: flex;
+        }
+        /* 面板内的子功能区域：透明度调节 */
+        .opacity-setting {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+        .opacity-setting input {
+            width: 100%;
+            opacity: 0.5;
+        }
+        .opacity-setting span {
+            color: #333;
+            font-size: 14px;
+            opacity: 1;
+            min-width: 40px;
+            text-align: center;
+        }
+        /* 面板内的子功能：自定义背景按钮 */
+        .bg-setting-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            background: #ffd6dd;
+            color: #000;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+            opacity: 0.8;
+            width: 100%;
+        }
+        .bg-setting-btn:hover {
+            background: #ffb3c1;
+        }
+        /* 关闭按钮样式 */
+        .close-btn {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 3px;
+            background: #ff6b8e;
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.2s;
+            opacity: 1;
+            margin-top: 5px;
+        }
+        .close-btn:hover {
+            background: #ff476f;
+        }
+        /* 隐藏移动端文件选择input */
+        #mobileFileInput {
+            display: none;
+        }
+        /* 仅针对极小屏幕（<320px）微调，避免文字挤压 */
+        @media (max-width: 320px) {
+            .site-item span {
+                font-size: 12px;
+            }
+            .site-container {
+                gap: 10px;
+            }
+            .site-list {
+                width: calc(50% - 5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="opacity-wrap" id="opacityWrap">
+        <div class="content-wrap">
+            <div class="top-bar">
+                <div class="func-btn-group">
+                    <!-- 仅保留1个设置按钮 -->
+                    <button class="setting-btn" id="settingBtn"></button>
+                    <!-- 合并后的设置面板，包含透明度和背景功能 -->
+                    <div class="setting-panel" id="settingPanel">
+                        <!-- 透明度调节子区域 -->
+                        <div class="opacity-setting">
+                            <input type="range" id="opacityRange" min="30" max="100" value="50">
+                            <span id="opacityValue">50%</span>
+                        </div>
+                        <!-- 自定义背景子按钮 -->
+                        <button class="bg-setting-btn" id="bgSettingBtn">自定义背景图片</button>
+                        <!-- 面板关闭按钮 -->
+                        <button class="close-btn" id="closeBtn">关闭</button>
+                    </div>
+                    <!-- 隐藏的移动端文件选择input，功能保留 -->
+                    <input type="file" id="mobileFileInput" accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
+                </div>
+            </div>
+            <div class="container">
+                <header>
+                    <h1>喵~次元</h1>
+                    <div class="time-display" id="timeDisplay">
+                        <div class="date-part" id="datePart"></div>
+                        <div class="time-part" id="timePart"></div>
+                    </div>
+                </header>
+                <!-- 双列导航容器：双端统一布局 -->
+                <div class="site-container">
+                    <!-- 左侧导航列表（10个） -->
+                    <ul class="site-list left-list">
+                        <li class="site-item">
+                            <a href="https://ciallo.cc/" target="_blank">
+                                <span>Ciallo～(∠・ω< )⌒★</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="https://www.touchgal.us/galgame?type=all&language=all&platform=all&sortField=resource_update_time&sortOrder=desc&selectedYears=%5B%22all%22%5D&selectedMonths=%5B%22all%22%5D&page=1" target="_blank">
+                                <span>touchgal</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="https://inarigal.com/ " target="_blank">
+                                <span>稻荷galgame</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="https://www.shinnku.org" target="_blank">
+                                <span>真红小站</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="https://theskyflame.pages.dev/" target="_blank">
+                                <span>天炎境</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="https://bbs.sumisora.net/" target="_blank">
+                                <span>澄空学园</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="https://www.cngal.org/" target="_blank">
+                                <span>CnGal</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="###" target="_blank">
+                                <span>？</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="###" target="_blank">
+                                <span>?</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="###" target="_blank">
+                                <span>?</span>
+                            </a >
+                        </li>
+                    </ul>
+                    <!-- 右侧导航列表（10个） -->
+                    <ul class="site-list right-list">
+                        <li class="site-item">
+                            <a href="https://www.acggw.me/" target="_blank">
+                                <span>ACG港湾</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="http://dmwload.yunwuee.icu/" target="_blank">
+                                <span>动漫屋get</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="https://shouku123.com/hanbinwie/" target="_blank">
+                                <span>风导星歌</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="###" target="_blank">
+                                <span>?</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="###" target="_blank">
+                                <span>?</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="###" target="_blank">
+                                <span>?</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="###" target="_blank">
+                                <span>?</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="###" target="_blank">
+                                <span>?</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="###" target="_blank">
+                                <span>?</span>
+                            </a >
+                        </li>
+                        <li class="site-item">
+                            <a href="###" target="_blank">
+                                <span>?</span>
+                            </a >
+                        </li>
+                    </ul>
+                </div>
+                <footer>
+                    <p>为爱发电，举报没亩</p >
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 获取核心元素
+        const settingBtn = document.getElementById('settingBtn');
+        const settingPanel = document.getElementById('settingPanel');
+        const opacityRange = document.getElementById('opacityRange');
+        const opacityValue = document.getElementById('opacityValue');
+        const bgSettingBtn = document.getElementById('bgSettingBtn');
+        const mobileFileInput = document.getElementById('mobileFileInput');
+        const closeBtn = document.getElementById('closeBtn');
+        const body = document.body;
+        const timeDisplay = document.getElementById('timeDisplay');
+        const datePart = document.getElementById('datePart');
+        const timePart = document.getElementById('timePart');
+        // 目标透明度元素：包含所有导航项
+        const targetOpacityElements = [
+            settingBtn, 
+            settingPanel, 
+            opacityRange, 
+            ...document.querySelectorAll('.site-item')
+        ];
+        // 页面加载时强制设置初始透明度为50%
+        targetOpacityElements.forEach(el => {
+            el.style.opacity = 0.5;
+        });
+        // 同步时间功能
+        function updateSyncTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const weekDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const weekDay = weekDays[now.getDay()];
+            datePart.textContent = `${year}年${month}月${day}日 ${weekDay}`;
+            
+            const hour = String(now.getHours()).padStart(2, '0');
+            const minute = String(now.getMinutes()).padStart(2, '0');
+            const second = String(now.getSeconds()).padStart(2, '0');
+            timePart.textContent = `${hour}:${minute}:${second}`;
+        }
+        updateSyncTime();
+        setInterval(updateSyncTime, 1000);
+        // 点击空白处隐藏设置面板
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.func-btn-group') && !e.target.closest('.setting-panel')) {
+                settingPanel.classList.remove('show');
+            }
+        });
+        // 点击设置按钮显示/隐藏面板
+        settingBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            settingPanel.classList.toggle('show');
+        });
+        // 关闭按钮事件
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            settingPanel.classList.remove('show');
+        });
+        // 透明度调节逻辑
+        opacityRange.addEventListener('input', () => {
+            const opacity = opacityRange.value / 100;
+            targetOpacityElements.forEach(el => {
+                el.style.opacity = opacity;
+            });
+            opacityValue.textContent = `${opacityRange.value}%`;
+        });
+        // 判断设备类型（用于文件选择逻辑）
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        // 自定义背景逻辑：双端保持原有功能，不影响默认背景区分
+        function setBackgroundImage(file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const bgStyle = `
+                    background-image: url(${event.target.result});
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-attachment: fixed;
+                    padding: 20px 15px;
+                    transition: background 0.3s, background-image 0.3s;
+                `;
+                body.style.cssText = `${bgStyle} min-height: 100vh; transform: none; position: static;`;
+                alert('图片访问权限已获取，背景图片设置成功！');
+                settingPanel.classList.remove('show');
+            };
+            reader.readAsDataURL(file);
+        }
+        // 背景设置按钮事件
+        bgSettingBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            if (isMobileDevice()) {
+                mobileFileInput.click();
+                return;
+            }
+            try {
+                const [fileHandle] = await window.showOpenFilePicker({
+                    types: [{description: '图片文件', accept: {'image/*': ['.jpg', '.jpeg', '.png', '.gif', '.webp']}}],
+                    multiple: false,
+                    excludeAcceptAllOption: true
+                });
+                const file = await fileHandle.getFile();
+                setBackgroundImage(file);
+            } catch (err) {
+                if (err.name === 'AbortError') alert('已取消图片选择，未获取访问权限');
+                else if (err.name === 'SecurityError') alert('图片访问权限被拒绝，请在浏览器设置中允许');
+                else if (err.name === 'TypeError') alert('未选择任何图片文件，请重新操作');
+                else alert(`背景设置失败：${err.message}，建议换图或检查权限`);
+            }
+        });
+        // 移动端文件选择事件
+        mobileFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) {alert('未选择任何图片文件'); return;}
+            const validTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                alert('请选择jpg、jpeg、png、gif、webp格式图片');
+                mobileFileInput.value = '';
+                return;
+            }
+            setBackgroundImage(file);
+            mobileFileInput.value = '';
+        });
+    </script>
+</body>
+</html>
+
