@@ -1,46 +1,46 @@
-﻿<！DOCTYPE 超文本标记语言>
-<超文本标记语言 朗="zh-CN">超文本标记语言 朗超文本标记语言"zh-CN">
-<头>
-    <元 字符集="UTF-8">
-    <元 姓名="视口" 内容="宽度=设备宽度，初始比例=1.0">
-    <标题>喵~次元</标题>
-    <风格>
-/* 1. 基础样式重置 */
+﻿<！DOCTYPE Hypertext Markup Language>
+<Hypertext Markup Language bright="zh-CN">Hypertext Markup Language Langchao Text Markup Language "zh-CN" >
+<head>
+    <yuan Character set="UTF-8">
+    <yuan Name="视口" Content="Width = Device Width, Initial Scale = 1.0">
+    <Title>Meow~dimension</Title>
+    <Style>
+/ * 1.Basic Style Reset* /
 * {
-边缘: 0;
-填充：0；
-箱体尺寸：边框框；
-文字装饰：没有一个；
-列表式：没有一个；
-字体系列："微软雅黑"，无衬线；
+Edge: 0;
+Filled: 0;
+Box size: side frame;
+Text decoration: none;
+List: none;
+Font series: "微软雅黑", sans serif;
         }
-        /* 2. 核心修改：先统一设置背景通用属性，再用媒体查询区分双端背景图 */
-身体 {
-背景尺寸：覆盖；
-背景重复：no-repeat；
-背景位置：中心；
-背景附着：确定的；
-填料：20px15px；
-过渡：背景0.3s，背景图象0.3s；
-最小高度：100vh；
-显示：弯曲；
-对齐-内容：居中；
-对齐项目：柔性启动；
-            顶部衬垫: 30PX;
+/ * 2.Core modification: Set the background general attributes in a unified way first, and then use media query to distinguish the double-ended background map* /
+Body {
+Background size: Overlay;
+Background Repeat: no-repeat；
+Background position: center;
+Background attachment: definite;
+Packing: 20px by 15px;
+Transition: background 0.3s, background image 0.3s;
+Minimum height: 100vh;
+Display: Curved;
+Alignment-Content: Center;
+Alignment items: soft start;
+            Top gasket: 30PX;
         }
-        /*PC端(屏幕>768px)：使用指定的默认背景图*/
-        @介质 (最小宽度: 769PX) {
-            身体 {
-                背景图象: URL(https://i.ibb.co/GvgFj0GH/20251026194154-83-4.jpg);
+/ *PC side (screen> 768px): use the specified default background map* /
+@Medium (Minimum width: 769PX) {
+Body {
+                Background image: URL(https://i.ibb.co/GvgFj0GH/20251026194154-83-4.jpg);
             }
         }
-        /* 移动端（屏幕≤768px）：恢复原始默认背景图 */
+/ *Mobile end (screen ≤ 768px): restore original default background map* /
         @media (max-width: 768px) {
             body {
                 background-image: url(https://i.ibb.co/jPbSBG6B/20251014191040-42-4.jpg);
             }
         }
-        /* 外层容器（透明度固定）：自适应宽度 */
+/ *Outer packagings (transparency fixed): adaptive width* /
         .opacity-wrap {
             width: 100%;
             max-width: 600px;
@@ -49,7 +49,7 @@
             position: relative;
             z-index: 1;
         }
-        .content-wrap {
+.content-wrap {
             position: relative;
         }
         .top-bar {
@@ -62,32 +62,32 @@
             flex-direction: column;
             align-items: center;
         }
-        /* 标题样式 */
+/ *Title Style* /
         header h1 {
-            text-align: center;
+            text-align:center;
             color:#ff476f;
             margin-bottom: 12px;
             font-size: 24px;
             opacity: 1;
         }
-        /* 时间模块样式 */
+/ *Time Module Style* /
         .time-display {
             color: #ff6b8e;
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 20px;
+            font-size:16px;
+            font-weight:500;
+            margin-bottom:20px;
             opacity: 1;
             text-align: center;
         }
-        .date-part {
-            font-size: 14px;
-            margin-bottom: 3px;
+.date-part {
+            font-size:fourteenpx;
+            margin-bottom:3px;
         }
         .time-part {
             font-size: 18px;
-            font-weight: bold;
+            font-weight:bold;
         }
-        /* 核心：双端统一双列布局，外层容器横向排列 */
+/ *Core: double-ended unified double-row layout, horizontal arrangement of outer container* /
         .site-container {
             display: flex;
             gap: 15px;
@@ -95,7 +95,7 @@
             width: 100%;
             margin-bottom: 30px;
         }
-        /* 网站列表：双端统一占比，自适应宽度 */
+/ *Website list: dual-end unified proportion, adaptive width* /
         .site-list {
             display: flex;
             flex-direction: column;
@@ -128,24 +128,24 @@
             box-shadow: 0 3px 8px rgba(0,0,0,0.1);
             background-color: #ffb3c1;
         }
-        /* 底部样式 */
+/ *Bottom Style* /
         footer {
-            text-align: center;
+            text-align:center;
             color: #888;
             font-size: 12px;
             margin-top: 15px;
             padding: 15px 0;
-            border-top: 1px solid #eee;
+            border-top: 1px solid#eee;
             width: 100%;
             opacity: 1;
         }
-        /* 核心：合并为1个设置按钮+设置面板样式（圆形+设置图标） */
+/ *Core: merged into 1 set button + set panel style (circle + set icon)* /
         .func-btn-group {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
-        /* 合并后的设置按钮：双端统一尺寸 */
+        / * Combined set button: double-ended unified size * /
         .setting-btn {
             width: 36px;
             height: 36px;
@@ -169,7 +169,7 @@
         .setting-btn:hover {
             background: #ffb3c1;
         }
-        /* 核心：扩展面板，双端适配尺寸 */
+: #888;/* 核心：扩展面板，双端适配尺寸 */
         .setting-panel {
             position: fixed;
             top: 50%;
