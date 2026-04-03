@@ -1,37 +1,37 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>喵~次元</title>
-    <style>
-        /* 1. 基础样式重置 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            text-decoration: none;
-            list-style: none;
-            font-family: "Microsoft YaHei", sans-serif;
+﻿<！DOCTYPE 超文本标记语言>
+<超文本标记语言 朗="zh-CN">超文本标记语言 朗超文本标记语言"zh-CN">
+<头>
+    <元 字符集="UTF-8">
+    <元 姓名="视口" 内容="宽度=设备宽度，初始比例=1.0">
+    <标题>喵~次元</标题>
+    <风格>
+/* 1. 基础样式重置 */
+* {
+边缘: 0;
+填充：0；
+箱体尺寸：边框框；
+文字装饰：没有一个；
+列表式：没有一个；
+字体系列："微软雅黑"，无衬线；
         }
         /* 2. 核心修改：先统一设置背景通用属性，再用媒体查询区分双端背景图 */
-        body {
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed;
-            padding: 20px 15px;
-            transition: background 0.3s, background-image 0.3s;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 30px;
+身体 {
+背景尺寸：覆盖；
+背景重复：no-repeat；
+背景位置：中心；
+背景附着：确定的；
+填料：20px15px；
+过渡：背景0.3s，背景图象0.3s；
+最小高度：100vh；
+显示：弯曲；
+对齐-内容：居中；
+对齐项目：柔性启动；
+            顶部衬垫: 30PX;
         }
-        /* PC端（屏幕>768px）：使用指定的默认背景图 */
-        @media (min-width: 769px) {
-            body {
-                background-image: url(https://i.ibb.co/GvgFj0GH/20251026194154-83-4.jpg);
+        /*PC端(屏幕>768px)：使用指定的默认背景图*/
+        @介质 (最小宽度: 769PX) {
+            身体 {
+                背景图象: URL(https://i.ibb.co/GvgFj0GH/20251026194154-83-4.jpg);
             }
         }
         /* 移动端（屏幕≤768px）：恢复原始默认背景图 */
@@ -252,76 +252,76 @@
                 font-size: 12px;
             }
             .site-container {
-                gap: 10px;
+间隙：10px；
             }
-            .site-list {
-                width: calc(50% - 5px);
+.site-list{
+宽度：calc(50%-5px)；
             }
         }
-    </style>
-</head>
-<body>
-    <div class="opacity-wrap" id="opacityWrap">
-        <div class="content-wrap">
-            <div class="top-bar">
-                <div class="func-btn-group">
-                    <!-- 仅保留1个设置按钮 -->
-                    <button class="setting-btn" id="settingBtn"></button>
+    </目标风格
+</头>
+<身体>
+    <div 班级="不透明环绕" 身份标识="opacityWrap">
+        <div 班级="内容自动换行">
+            <div 班级="顶栏">
+                <div 班级="func-btn-group">
+                    <! -- 仅保留1个设置按钮 -->
+                    <按钮 班级="设置-btn" 身份标识="settingBtn"></按钮>
                     <!-- 合并后的设置面板，包含透明度和背景功能 -->
-                    <div class="setting-panel" id="settingPanel">
-                        <!-- 透明度调节子区域 -->
-                        <div class="opacity-setting">
-                            <input type="range" id="opacityRange" min="30" max="100" value="50">
-                            <span id="opacityValue">50%</span>
+                    <div 班级="设置面板" 身份标识="settingPanel">
+                        <! -- 透明度调节子区域 -->
+                        <div 班级="不透明度设置">
+                            <输入 类型="范围" 身份标识="opacityRange" 最小值="30" 最大值="100" 价值="50">
+                            <跨度 身份标识="opacityValue">50%</跨度>
                         </div>
-                        <!-- 自定义背景子按钮 -->
-                        <button class="bg-setting-btn" id="bgSettingBtn">自定义背景图片</button>
-                        <!-- 面板关闭按钮 -->
-                        <button class="close-btn" id="closeBtn">关闭</button>
+                        <! -- 自定义背景子按钮 -->
+                        <按钮 班级="bg-设置-btn" 身份标识="bgSettingBtn">自定义背景图片</按钮>
+                        <！--面板关闭按钮-->
+                        <按钮 班级="close-btn" 身份标识="closeBtn">关闭</按钮>
                     </div>
-                    <!-- 隐藏的移动端文件选择input，功能保留 -->
-                    <input type="file" id="mobileFileInput" accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
-                </div>
-            </div>
-            <div class="container">
-                <header>
-                    <h1>喵~次元</h1>
-                    <div class="time-display" id="timeDisplay">
-                        <div class="date-part" id="datePart"></div>
-                        <div class="time-part" id="timePart"></div>
+                    <！--隐藏的移动端文件选择input，功能保留-->
+                    <输入 类型="文件" 身份标识="mobileFileInput" 接受="image/jpg，image/jpeg，image/png，image/gif，image/webp">
+</div>
+</div>
+            <div 班级="容器">
+                <页眉>
+                    <H1>喵喵喵~</H1>
+                    <div 班级="时间显示" 身份标识="timeDisplay">
+                        <div 班级="日期部分" 身份标识="日期部分"></div>
+                        <div 班级="时间部分" 身份标识="timePart"></div>
                     </div>
-                </header>
+                </页眉>
                 <!-- 双列导航容器：双端统一布局 -->
-                <div class="site-container">
-                    <!-- 左侧导航列表（10个） -->
-                    <ul class="site-list left-list">
-                        <li class="site-item">
-                            <a href="https://ciallo.cc/" target="_blank">
-                                <span>Ciallo～(∠・ω< )⌒★</span>
-                            </a >
-                        </li>
-                        <li class="site-item">
-                            <a href="https://www.touchgal.top/" target="_blank">
-                                <span>touchgal</span>
-                            </a >
-                        </li>
-                        <li class="site-item">
-                            <a href="https://inarigal.com/ " target="_blank">
-                                <span>稻荷galgame</span>
-                            </a >
-                        </li>
-                        <li class="site-item">
-                            <a href="https://dev.shinnku.us/" target="_blank">
-                                <span>真红小站</span>
-                            </a >
-                        </li>
-                        <li class="site-item">
-                            <a href="https://theskyflame.pages.dev/" target="_blank">
-                                <span>天炎境</span>
-                            </a >
-                        </li>
-                        <li class="site-item">
-                            <a href="https://bbs.sumisora.net/" target="_blank">
+                <div 班级="站点容器">
+<! -- 左侧导航列表（10个） -->
+                    <UL 班级="站点列表左列表">
+                        <锂 班级="站点项目">
+                            <一个 href="https://ciallo.cc/" 目标="_空白">
+                                <跨度>Ciallo～(∠・ω<)∼★</跨度>
+                            </一个 >
+                        </锂>
+                        <锂 班级="站点项目">
+                            <一个 href="https://www.touchgal.top/" 目标="_空白">
+                                <跨度>touchgal</跨度>
+                            </一个 >
+                        </锂>
+                        <锂 班级="站点项目">
+                            <一个 href="https://inarigal.com/" 目标="_空白">
+                                <跨度>稻荷galgame</跨度>
+                            </一个 >
+                        </锂>
+                        <锂 班级="站点项目">
+                            <一个 href="https://dev.shinnku.us/" 目标="_空白">
+                                <跨度>真红小站</跨度>
+                            </一个 >
+                        </锂>
+                        <锂 班级="站点项目">
+                            <一个 href="https://theskyflame.pages.dev/" 目标="_空白">
+                                <跨度>天炎境</跨度>
+                            </一个 >
+                        </锂>
+                        <锂 班级="站点项目">
+                            <一个 href="https://bbs.sumisora.net/" 目标="_空白">
                                 <span>澄空学园</span>
                             </a >
                         </li>
